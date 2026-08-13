@@ -2,9 +2,9 @@
 
 An agent skill that reviews writing against three high-signal style guides:
 
-- **Clay AI Writing Policy** — human ownership, writing-as-thinking, anti-slop rules
-- **Amazon “Write Like an Amazonian” tips** — data-driven, concise, objective prose
-- **ASD-STE100 (distilled)** — controlled language for clarity and technical precision
+- **Clay AI Writing Policy**: human ownership, writing-as-thinking, anti-slop rules
+- **Amazon “Write Like an Amazonian” tips**: data-driven, concise, objective prose
+- **ASD-STE100 (distilled)**: controlled language for clarity and technical precision
 
 The skill automatically routes to the most relevant guide(s), retrieves only the applicable rules, and returns structured feedback with quoted issues, severity, rule citations, and suggested rewrites.
 
@@ -40,6 +40,29 @@ cp SKILL.md ~/.claude/skills/clear-writing-checker/SKILL.md
 
 After installation, invoke the skill with phrases such as “check writing”, “review this text”, “apply style guides”, or “STE100 check”.
 
+## Linter
+
+Run the bundled linter before you ship technical documentation or add a quality check to CI:
+
+```bash
+python3 skills/clear-writing-checker/scripts/ste-lint.py README.md
+```
+
+It reports the total findings, findings per 100 words, and em-dash count. Use these options when you need more detail:
+
+```bash
+# Print the complete report as JSON
+python3 skills/clear-writing-checker/scripts/ste-lint.py README.md --json
+
+# Apply the stricter ASD-STE100 checks
+python3 skills/clear-writing-checker/scripts/ste-lint.py README.md --strict
+
+# Fail CI when any checked file exceeds the threshold
+python3 skills/clear-writing-checker/scripts/ste-lint.py '*.md' --fail-over 3
+```
+
+The default mode flags clarity and style risks without treating every ASD-STE100 restriction as an error. Use `--strict` for controlled technical writing.
+
 ## Usage
 
 Provide the text to review and optional metadata:
@@ -61,6 +84,7 @@ The skill returns a consistent report containing:
 | File | Description |
 |------|-------------|
 | `SKILL.md` | The complete skill definition (front matter + prompt body) |
+| `scripts/ste-lint.py` | Standalone writing linter with optional strict mode and CI threshold |
 | `references/` (optional) | Place the three source guides here for RAG or direct loading |
 | `README.md` | This file |
 

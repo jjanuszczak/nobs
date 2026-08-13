@@ -1,4 +1,10 @@
+# Clear Writing Example
+
+The clear writing checker skill was used to review and rewrite a [linkedin post](https://lnkd.in/p/gtyw7Ngb) based on an article on the [AI Enabling Bank](https://januszczak.org/articles/ai-enabling-bank-infrastructure-matters/)
+
 ## Original LinkedIn Post
+
+*The origional post was written specifically for LinkedIn.*
 
 Most banks are asking, “What AI feature should we launch next?”
 
